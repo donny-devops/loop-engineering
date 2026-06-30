@@ -1,0 +1,14 @@
+# .github/workflows/verify-dist.yml
+name: verify-dist-freshness
+on: [pull_request]
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: npm ci
+      - run: npm run build
+      - name: Fail if dist/ doesn't match committed output
+        run: |
+          git diff --exit-code dist/ || \
+          (echo "::error::dist/ is stale — rebuild and commit before merging" && exit 1)
