@@ -20,7 +20,7 @@ jobs:
       - working-directory: tools/loop-audit
         run: npm ci
       - working-directory: tools/loop-audit
-        run: node dist/cli.js .. --level L2
+        run: node dist/cli.js ../.. --level L2
   audit:
     runs-on: ubuntu-latest
     steps:
