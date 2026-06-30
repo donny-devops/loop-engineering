@@ -1,0 +1,2 @@
+cp -r starters/minimal-loop/.grok/skills/loop-triage .grok/skills/  # Grok
+cp starters/minimal-loop/STATE.md.triage-loop STATE.md
