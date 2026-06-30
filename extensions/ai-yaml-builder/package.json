@@ -1,0 +1,16 @@
+﻿{
+  "name": "ai-yaml-builder",
+  "displayName": "AI YAML Builder",
+  "description": "Generate and validate GitHub Actions, K8s, and Compose YAML with AI.",
+  "version": "0.1.0",
+  "publisher": "donny-devops",
+  "engines": { "vscode": "^1.80.0" },
+  "categories": [ "Other", "Snippets" ],
+  "activationEvents": [ "onCommand:extension.hello" ],
+  "contributes": {
+    "commands": [ { "command": "extension.hello", "title": "Hello World" } ]
+  },
+  "main": "./out/extension.js",
+  "scripts": { "vscode": "prepublish" },
+  "devDependencies": { "@types/vscode": "^1.80.0", "@types/node": "^20.0.0" }
+}

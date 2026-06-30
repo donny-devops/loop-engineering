@@ -1,0 +1,11 @@
+﻿name: stale-branch-cleanup.yml
+on:
+  schedule:
+    - cron: '0 6 * * *'
+  workflow_dispatch:
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: echo 'stale-branch-cleanup.yml workflow placeholder'
