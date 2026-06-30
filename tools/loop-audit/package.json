@@ -1,0 +1,53 @@
+{
+  "name": "@cobusgreyling/loop-audit",
+  "version": "1.3.0",
+  "description": "Loop Readiness Score — audit a project for loop engineering readiness (L0-L3). Supports --suggest for copy commands.",
+  "type": "module",
+  "bin": {
+    "loop-audit": "./dist/cli.js"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "test": "npm run build && node --test test/auditor.test.mjs",
+    "prepublishOnly": "npm test",
+    "start": "node dist/cli.js",
+    "audit": "npm run build && node dist/cli.js",
+    "audit:suggest": "npm run build && node dist/cli.js . --suggest",
+    "demo": "bash ../../scripts/before-after-demo.sh"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "loop-engineering",
+    "ai-agents",
+    "coding-agents",
+    "claude-code",
+    "codex",
+    "grok",
+    "readiness",
+    "audit"
+  ],
+  "author": "Cobus Greyling",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cobusgreyling/loop-engineering.git",
+    "directory": "tools/loop-audit"
+  },
+  "homepage": "https://cobusgreyling.github.io/loop-engineering/",
+  "bugs": {
+    "url": "https://github.com/cobusgreyling/loop-engineering/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0"
+  }
+}
