@@ -1,0 +1,326 @@
+# Instincts generated from https://github.com/donny-devops/loop-engineering
+# Generated: 2026-06-30T06:21:15.844Z
+# Version: 2.0
+# NOTE: This file supplements (does not replace) any existing curated instincts.
+# High-confidence manually curated instincts should be preserved alongside these.
+
+---
+id: loop-engineering-commit-conventional
+trigger: "when writing a commit message"
+confidence: 0.85
+domain: git
+source: repo-analysis
+source_repo: https://github.com/donny-devops/loop-engineering
+---
+
+# Loop Engineering Commit Conventional
+
+## Action
+
+Use conventional commit format with prefixes: fix, chore
+
+## Evidence
+
+- 3 commits analyzed
+- Detected conventional commit pattern
+- Examples: fix: gitleaks workflow - remove unsupported inputs, fetch full history, chore: trigger secret scan
+
+---
+id: loop-engineering-commit-length
+trigger: "when writing a commit message"
+confidence: 0.6
+domain: git
+source: repo-analysis
+source_repo: https://github.com/donny-devops/loop-engineering
+---
+
+# Loop Engineering Commit Length
+
+## Action
+
+Keep commit messages concise (~43 characters)
+
+## Evidence
+
+- Average commit message length: 43 chars
+- Based on 3 commits
+
+---
+id: loop-engineering-naming-files
+trigger: "when creating a new file"
+confidence: 0.8
+domain: code-style
+source: repo-analysis
+source_repo: https://github.com/donny-devops/loop-engineering
+---
+
+# Loop Engineering Naming Files
+
+## Action
+
+Use snake_case naming convention
+
+## Evidence
+
+- Analyzed file naming patterns in repository
+- Dominant pattern: snake_case
+
+---
+id: loop-engineering-import-relative
+trigger: "when importing modules"
+confidence: 0.75
+domain: code-style
+source: repo-analysis
+source_repo: https://github.com/donny-devops/loop-engineering
+---
+
+# Loop Engineering Import Relative
+
+## Action
+
+Use relative imports for project files
+
+## Evidence
+
+- Import analysis shows relative import pattern
+- Example: import { x } from '../lib/x'
+
+---
+id: loop-engineering-export-style
+trigger: "when exporting from a module"
+confidence: 0.7
+domain: code-style
+source: repo-analysis
+source_repo: https://github.com/donny-devops/loop-engineering
+---
+
+# Loop Engineering Export Style
+
+## Action
+
+Prefer named exports
+
+## Evidence
+
+- Export pattern analysis
+- Dominant style: named
+
+---
+id: loop-engineering-test-separate
+trigger: "when writing tests"
+confidence: 0.8
+domain: testing
+source: repo-analysis
+source_repo: https://github.com/donny-devops/loop-engineering
+---
+
+# Loop Engineering Test Separate
+
+## Action
+
+Place tests in the tests/ or __tests__/ directory, mirroring src structure
+
+## Evidence
+
+- Separate test directory pattern detected
+- Tests live in dedicated test folders
+
+---
+id: loop-engineering-workflow-update-secret-scan-workflow
+trigger: "when doing update secret scan workflow"
+confidence: 0.6
+domain: workflow
+source: repo-analysis
+source_repo: https://github.com/donny-devops/loop-engineering
+---
+
+# Loop Engineering Workflow Update Secret Scan Workflow
+
+## Action
+
+Follow the update-secret-scan-workflow workflow:
+1. Edit .github/workflows/secret-scan.yml to update configuration or trigger a run
+2. Commit changes with a message referencing secret scan or gitleaks
+3. Optionally, update related documentation or agent files if the workflow logic changes
+
+## Evidence
+
+- Workflow detected from commit patterns
+- Frequency: ~2x per month
+- Files: .github/workflows/secret-scan.yml
+
+---
+id: loop-engineering-instinct-naming-files
+trigger: "When creating or renaming a file in the repository"
+confidence: 0.85
+domain: code-style
+source: repo-analysis
+source_repo: donny-devops/loop-engineering
+---
+
+# Loop Engineering Instinct Naming Files
+
+## Action
+
+Use snake_case for file names
+
+## Evidence
+
+- Pattern in codeStyle.namingConventions.files
+
+---
+id: loop-engineering-instinct-naming-functions
+trigger: "When defining a new function"
+confidence: 0.8
+domain: code-style
+source: repo-analysis
+source_repo: donny-devops/loop-engineering
+---
+
+# Loop Engineering Instinct Naming Functions
+
+## Action
+
+Use camelCase for function names
+
+## Evidence
+
+- Pattern in codeStyle.namingConventions.functions
+
+---
+id: loop-engineering-instinct-naming-classes
+trigger: "When defining a new class"
+confidence: 0.8
+domain: code-style
+source: repo-analysis
+source_repo: donny-devops/loop-engineering
+---
+
+# Loop Engineering Instinct Naming Classes
+
+## Action
+
+Use PascalCase for class names
+
+## Evidence
+
+- Pattern in codeStyle.namingConventions.classes
+
+---
+id: loop-engineering-instinct-naming-constants
+trigger: "When defining a constant"
+confidence: 0.8
+domain: code-style
+source: repo-analysis
+source_repo: donny-devops/loop-engineering
+---
+
+# Loop Engineering Instinct Naming Constants
+
+## Action
+
+Use SCREAMING_SNAKE_CASE for constant names
+
+## Evidence
+
+- Pattern in codeStyle.namingConventions.constants
+
+---
+id: loop-engineering-instinct-import-style
+trigger: "When importing modules in Python files"
+confidence: 0.8
+domain: code-style
+source: repo-analysis
+source_repo: donny-devops/loop-engineering
+---
+
+# Loop Engineering Instinct Import Style
+
+## Action
+
+Use relative imports
+
+## Evidence
+
+- Pattern in codeStyle.importStyle
+
+---
+id: loop-engineering-instinct-export-style
+trigger: "When exporting functions or classes"
+confidence: 0.8
+domain: code-style
+source: repo-analysis
+source_repo: donny-devops/loop-engineering
+---
+
+# Loop Engineering Instinct Export Style
+
+## Action
+
+Use named exports
+
+## Evidence
+
+- Pattern in codeStyle.exportStyle
+
+---
+id: loop-engineering-instinct-git-commit-format
+trigger: "When writing a commit message"
+confidence: 0.9
+domain: git
+source: repo-analysis
+source_repo: donny-devops/loop-engineering
+---
+
+# Loop Engineering Instinct Git Commit Format
+
+## Action
+
+Use a conventional commit prefix (e.g., fix, chore) followed by a colon and a brief message
+
+## Evidence
+
+- Seen in commit: fix: gitleaks workflow - remove unsupported inputs, fetch full history
+- Seen in commit: chore: trigger secret scan
+- Pattern in commits.prefixes
+
+---
+id: loop-engineering-instinct-git-commit-length
+trigger: "When composing a commit message"
+confidence: 0.7
+domain: git
+source: repo-analysis
+source_repo: donny-devops/loop-engineering
+---
+
+# Loop Engineering Instinct Git Commit Length
+
+## Action
+
+Keep the commit message concise, around 43 characters on average
+
+## Evidence
+
+- Pattern in commits.averageLength
+
+---
+id: loop-engineering-instinct-update-secret-scan-workflow
+trigger: "When someone wants to change how secret scanning is performed or trigger a scan in the CI pipeline"
+confidence: 0.95
+domain: workflow
+source: repo-analysis
+source_repo: donny-devops/loop-engineering
+---
+
+# Loop Engineering Instinct Update Secret Scan Workflow
+
+## Action
+
+Edit .github/workflows/secret-scan.yml, commit with a message referencing secret scan or gitleaks, and optionally update related documentation or agent files
+
+## Evidence
+
+- Workflow: update-secret-scan-workflow
+- Seen in commits: fix: gitleaks workflow - remove unsupported inputs, fetch full history
+- Pattern in .github/workflows/secret-scan.yml
+
