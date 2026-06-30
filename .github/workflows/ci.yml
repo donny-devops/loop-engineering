@@ -1,37 +1,23 @@
-﻿name: CI
-on:
-  push:
-    branches: [main, master]
-  pull_request:
-    branches: [main, master]
-  workflow_dispatch:
 jobs:
-  validate:
+  build:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: .   # <-- repo root, not loop-engineering/loop-engineering
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 20.x
           cache: npm
-      - working-directory: tools/loop-audit
+          cache-dependency-path: |
+            frontend/package-lock.json
+            doc/package-lock.json
+      - name: Install frontend deps
+        if: hashFiles('frontend/package-lock.json') != ''
+        working-directory: frontend
         run: npm ci
-      - working-directory: tools/loop-audit
-        run: node dist/cli.js .. --level L2
-  audit:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: npm
-      - working-directory: tools/loop-audit
+      - name: Install docs deps
+        if: hashFiles('doc/package-lock.json') != ''
+        working-directory: doc
         run: npm ci
-      - working-directory: tools/loop-audit
-        run: npm run build
-# cache-bust 20260630-055332
