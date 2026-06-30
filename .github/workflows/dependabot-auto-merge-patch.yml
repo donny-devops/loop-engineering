@@ -1,0 +1,15 @@
+﻿name: Dependabot Auto-Merge (patch)
+on: pull_request
+permissions:
+  contents: write
+  pull-requests: write
+jobs:
+  auto-merge:
+    if: github.actor == 'dependabot[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: gh-actions-dependabot/auto-merge@v1
+        with:
+          approval-mode: "approve"
+          target-branch: "master"
