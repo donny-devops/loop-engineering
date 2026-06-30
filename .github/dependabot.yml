@@ -1,13 +1,27 @@
 ﻿version: 2
 updates:
-  - package-ecosystem: "npm"
-    directory: "/"
+  - package-ecosystem: npm
+    directory: /
     schedule:
-      interval: "daily"
-    open-pull-requests-limit: 5
-    reviewers:
-      - "donny-devops"
+      interval: daily
+    open-pull-requests-limit: 10
     allow:
-      - dependency-type: "direct"
-    commit-message:
-      prefix: "chore(deps)"
+      - dependency-type: direct
+    groups:
+      production:
+        patterns:
+          - '*'
+      dev:
+        dependency-type: development
+        patterns:
+          - '*'
+  - package-ecosystem: pip
+    directory: /
+    schedule:
+      interval: daily
+    allow:
+      - dependency-type: direct
+    groups:
+      pip-group:
+        patterns:
+          - '*'
