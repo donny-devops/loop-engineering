@@ -10,71 +10,90 @@ Frequency: daily (1d)
 ## Project Name
 Loop Engineering
 
-## Daily Triage Loop
-Goal: Start each day with a prioritized, actionable picture of what needs attention — without manually checking CI, issues, PRs, and chat.
+## One-line Goal
+Maintain a production-patterns repo with daily triage, changelog drafting, CI/PR/issue watch loops, and assisted fixes via minimal-fix + loop-verifier.
 
-Scheduling
-- `/loop 1d` for morning triage (report-only recommended for first 1–2 weeks)
-- `/loop 2h` during active sprints for faster signal
-- GitHub Actions: `0 8 * * 1-5` for teams without a TUI
+## Non-goals
+- Automated architectural refactors
+- Auto-merge without human review
+- Any changes touching auth/payments/secrets/infra without explicit approval
 
-Required Skills
-- `loop-triage` — reads CI, issues, commits, chat; produces prioritized findings
-- `minimal-fix` (optional, phase 2) — drafts small fixes for obvious failures
-- Reviewer sub-agent or skill (optional, phase 2) — verifies proposed fixes
+## Watched Scope
+- Repo: `C:\Users\adoni\OneDrive\Desktop\Projects\loop-engineering`
+- Branches: main/master
+- Artifacts: `STATE.md`, `loop-run-log.md`, per-loop state files, `.github/workflows/*`
 
-State
-- Use `STATE.md` as the memory spine; update only the triage skill appending findings here
-- Fields to update every run:
-  - `Last run` timestamp
-  - Item status + last action taken
-  - Human decisions that overrode the loop
+## Phased Rollout
+- Week 1–2: report-only triage
+- Week 2–4: enable assisted fixes behind verifier
+- L3 unattended mode only after 2 stable weeks and positive `loop-audit` score
 
-How the Loop Runs (Typical Cycle)
-1. Scheduler fires (morning or interval).
-2. Triage skill ingests: CI failures (24h), open issues/tickets, recent commits, prior `STATE.md`.
-3. High-priority items appended to state with suggested next action.
-4. (Phase 2) For small, self-contained failures: open worktree → implementer → verifier.
-5. (Phase 3) Connectors update PRs/tickets; ambiguous items flagged for human.
-6. Prune resolved/merged items from state.
-7. Record post-run critique in state: false positives, repeated items, re-prioritized or dropped items, and one adjustment for next run.
+## Active Loops
+- Daily Triage — 09:00, `loop-triage` → `STATE.md` (L1)
+- Changelog Drafter — 08:30, `changelog-scan` + `draft-release-notes` → `changelog-drafter-state.md`
+- Post-Merge Cleanup — 10:00, `post-merge-scan` + `minimal-fix` + `loop-verifier`
+- Dependency Sweeper — every 6h, `dependency-triage` + `minimal-fix` + `loop-verifier`
+- CI Sweeper — every 15m, `ci-triage` + `minimal-fix` + `loop-verifier`
+- Issue Triage — every 2h, `issue-triage`
+- PR Babysitter — every 5m, `pr-review-triage` + `minimal-fix` + `loop-verifier`
 
-Post-Run Critique
-- High-noise items
-- False positives
-- Items that should be deprioritized
-- Human-review friction
-- One change to improve the next cycle
+## Required Skills
+- loop-triage
+- changelog-scan
+- draft-release-notes
+- loop-verifier
+- loop-budget
+- minimal-fix
+- pr-review-triage
+- post-merge-scan
+- ci-triage
+- dependency-triage
+- issue-triage
 
-Verification Strategy
-- Phase 1 (report-only): Human reads `STATE.md` — no auto-action verification needed.
-- Phase 2+: Never let implementer mark work done; verifier confirms fix scope and tests.
-- Triage skill must not invent architectural work — signal only.
+## Output Format for Each Run
+1. High-Priority Items (act today)
+2. Watch Items (monitor)
+3. Noise / Ignored
+4. State Updates
 
-Human Handoff Points
-- Design decisions or multi-file refactors
-- Security, auth, payments, infrastructure
-- Items flagged "needs discussion" in triage output
-- Anything the loop has surfaced 3+ days without resolution
+## Loop Readiness Audit Score
+- Baseline audit: 68/100 (L2 Assisted)
+- Last `loop-audit` run: n/a in state — recommend rerun at end of week one
+- Last `loop-run-log.md` update: entries seeded 2026-06-29
 
-Failure Modes & Mitigations
-- Triage creates noise: tighten skill rules; add "Noise / Ignore" section
-- State file grows unbounded: prune merged/closed items every run
-- Auto-fix on wrong priority: start report-only; add explicit effort/risk gates
-- Missed overnight failures: add fireImmediately: true or run at start of day + mid-day
-- Stale critique / never reviewed: add human handoff when critique entries accumulate without resolution across N runs
+## Human Overrides
+- None recorded yet
 
-Success Metrics
-- Time from "something broke" to "human knows about it"
-- % of mornings where `STATE.md` matched what you'd have found manually
-- Reduction in ad-hoc "what's on fire?" messages
-
-Current Phase: Week one — report-only. Do not auto-fix.
+## Baseline Findings (2026-06-29)
+- Repo scaffold complete: STATE.md, LOOP.md, AGENTS.md, safety.md, loop-budget.md, loop-run-log.md
+- Docs present: README, SECURITY, CHANGELOG, ARCHITECTURE, CONTRIBUTING, ROADMAP, CODEOWNERS, LOOP_DESIGN_CHECKLIST, WORKFLOW
+- Skills scaffolded: 11 skills under `.grok/skills/`
+- Loops defined: 7 loops with state files + LOOP_* manifests
+- No application source or CI pipelines in-repo yet
+- No tags beyond v0.1.0; no release history present
 
 ## Open Items
-- [High] Add `LICENSE` file
-- [Watch] `triage-loop.txt` purpose — confirm if linker/archival or duplicate content
-- [Watch] Expand triage skill sources after initial quality is validated
+- `LICENSE` missing — add before public launch
+- `triage-loop.txt` purpose unconfirmed — keep or document
+- `refs/nexent/` added as path-filtered upstream reference only; no local CI updates from it
+- No actual GitHub Actions workflows deployed yet
+- No `.github/` config present locally
 
-## Completed
-- [x] Initialize `.git` repo and push initial commit
+## Post-run Critique Template
+- What passed:
+- What changed:
+- Human feedback:
+
+## Escalation Triggers
+- Any PR/touch of auth/payments/secrets/infra paths
+- >3 fix attempts on same item without progress
+- Same flake recurring in CI sweeper
+- High-sev CVE or major dependency bump
+- Token spend near daily cap
+
+## Verify Week One
+- Triage cron runs daily at 09:00
+- Findings are concise and accurate
+- No state drift; STATE.md stays source of truth
+- Human feedback incorporated into LOOP.md + skill formats
+- Break-fix rate acceptable before enabling auto-fix loops
