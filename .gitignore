@@ -1,0 +1,23 @@
+﻿# Env / secrets
+.env
+.env.*
+*.pem
+*.key
+*.p12
+secrets/
+
+# Node
+node_modules/
+dist/
+.next/
+
+# Hermes
+.hermes/
+*.log
+
+# OS / editor
+Thumbs.db
+.DS_Store
+*.swp
+*.swo
+*~

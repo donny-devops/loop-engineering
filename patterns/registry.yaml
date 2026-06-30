@@ -1,78 +1,36 @@
-{
-  "skills": [
-    "loop-triage",
-    "changelog-scan",
-    "draft-release-notes",
-    "loop-verifier",
-    "loop-budget",
-    "minimal-fix",
-    "pr-review-triage",
-    "post-merge-scan",
-    "ci-triage",
-    "dependency-triage",
-    "issue-triage"
-  ],
-  "loops": [
-    {
-      "name": "daily-triage",
-      "skill": "loop-triage",
-      "state": "STATE.md",
-      "frequency": "1d"
-    },
-    {
-      "name": "changelog-drafter",
-      "skills": [
-        "changelog-scan",
-        "draft-release-notes"
-      ],
-      "state": "changelog-drafter-state.md",
-      "frequency": "1d"
-    },
-    {
-      "name": "post-merge-cleanup",
-      "skills": [
-        "post-merge-scan",
-        "minimal-fix",
-        "loop-verifier"
-      ],
-      "state": "post-merge-state.md",
-      "frequency": "1d"
-    },
-    {
-      "name": "dependency-sweeper",
-      "skills": [
-        "dependency-triage",
-        "minimal-fix",
-        "loop-verifier"
-      ],
-      "state": "dependency-sweeper-state.md",
-      "frequency": "6h"
-    },
-    {
-      "name": "ci-sweeper",
-      "skills": [
-        "ci-triage",
-        "minimal-fix",
-        "loop-verifier"
-      ],
-      "state": "ci-sweeper-state.md",
-      "frequency": "15m"
-    },
-    {
-      "name": "issue-triage",
-      "skill": "issue-triage",
-      "state": "issue-triage-state.md",
-      "frequency": "2h"
-    },
-    {
-      "name": "pr-babysitter",
-      "skills": [
-        "pr-review-triage",
-        "minimal-fix",
-        "loop-verifier"
-      ],
-      "state": "pr-babysitter-state.md",
-      "frequency": "5m"
-    }
-  ]
-}
+﻿entries:
+  - id: daily-triage
+    loop: daily-triage
+    level: L1
+    active: true
+    schedule: "0 9 * * *"
+  - id: changelog-drafter
+    loop: changelog-drafter
+    level: L1
+    active: true
+    schedule: "30 8 * * *"
+  - id: post-merge-cleanup
+    loop: post-merge-cleanup
+    level: L1
+    active: true
+    schedule: "0 10 * * *"
+  - id: dependency-sweeper
+    loop: dependency-sweeper
+    level: L1
+    active: true
+    schedule: "every 6h"
+  - id: ci-sweeper
+    loop: ci-sweeper
+    level: L1
+    active: true
+    schedule: "every 15m"
+  - id: issue-triage
+    loop: issue-triage
+    level: L1
+    active: true
+    schedule: "every 2h"
+  - id: pr-babysitter
+    loop: pr-babysitter
+    level: L1
+    active: true
+    schedule: "every 5m"
