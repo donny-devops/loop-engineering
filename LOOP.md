@@ -39,3 +39,13 @@ See `safety.md` for the full denylist and policies.
 - `loop-triage` — prioritizes signals
 - `loop-verifier` — validates proposed fixes before approval
 - `loop-budget` — checks cap before and after each run
+
+## Connectors (MCP)
+- MCP not required for this pattern.
+- No GitHub/GitLab/Linear connector is configured by default.
+- If connectors are added later, they must use minimum permissions: read access for triage, write only for explicit allowlisted paths after verifier approval.
+
+## Worktree Isolation
+- When phase 2 auto-fixes are enabled, use git worktrees for fix isolation.
+- Implementer and verifier must operate in separate worktrees.
+- Implementer cannot mark its own work "done"; verifier confirms scope and tests.
