@@ -4,7 +4,13 @@
     "changelog-scan",
     "draft-release-notes",
     "loop-verifier",
-    "loop-budget"
+    "loop-budget",
+    "minimal-fix",
+    "pr-review-triage",
+    "post-merge-scan",
+    "ci-triage",
+    "dependency-triage",
+    "issue-triage"
   ],
   "loops": [
     {
@@ -21,6 +27,52 @@
       ],
       "state": "changelog-drafter-state.md",
       "frequency": "1d"
+    },
+    {
+      "name": "post-merge-cleanup",
+      "skills": [
+        "post-merge-scan",
+        "minimal-fix",
+        "loop-verifier"
+      ],
+      "state": "post-merge-state.md",
+      "frequency": "1d"
+    },
+    {
+      "name": "dependency-sweeper",
+      "skills": [
+        "dependency-triage",
+        "minimal-fix",
+        "loop-verifier"
+      ],
+      "state": "dependency-sweeper-state.md",
+      "frequency": "6h"
+    },
+    {
+      "name": "ci-sweeper",
+      "skills": [
+        "ci-triage",
+        "minimal-fix",
+        "loop-verifier"
+      ],
+      "state": "ci-sweeper-state.md",
+      "frequency": "15m"
+    },
+    {
+      "name": "issue-triage",
+      "skill": "issue-triage",
+      "state": "issue-triage-state.md",
+      "frequency": "2h"
+    },
+    {
+      "name": "pr-babysitter",
+      "skills": [
+        "pr-review-triage",
+        "minimal-fix",
+        "loop-verifier"
+      ],
+      "state": "pr-babysitter-state.md",
+      "frequency": "5m"
     }
   ]
 }
