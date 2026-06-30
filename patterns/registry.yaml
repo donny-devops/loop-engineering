@@ -1,0 +1,26 @@
+{
+  "skills": [
+    "loop-triage",
+    "changelog-scan",
+    "draft-release-notes",
+    "loop-verifier",
+    "loop-budget"
+  ],
+  "loops": [
+    {
+      "name": "daily-triage",
+      "skill": "loop-triage",
+      "state": "STATE.md",
+      "frequency": "1d"
+    },
+    {
+      "name": "changelog-drafter",
+      "skills": [
+        "changelog-scan",
+        "draft-release-notes"
+      ],
+      "state": "changelog-drafter-state.md",
+      "frequency": "1d"
+    }
+  ]
+}
