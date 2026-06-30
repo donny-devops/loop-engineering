@@ -1,24 +1,39 @@
-# AGENTS
+# AGENTS.md — loop-engineering reference
 
-## Purpose
-This file documents the conventions for agents (human or automated) working in this repo.
+Conventions for humans and loops maintaining this repository.
 
-## Build / Test Commands
-- No compiled code or language-specific build in this repo yet.
-- For docs-only changes: edit markdown and open a PR.
+## Build & verify
 
-## Commit Format
-Conventional commits recommended: `type(scope): subject`.
-Examples: `feat(triage): ...`, `chore(docs): ...`
+```bash
+# Loop readiness audit CLI
+cd tools/loop-audit && npm ci && npm run build
+node dist/cli.js ../..              # audit repo root
+node dist/cli.js ../.. --suggest    # show copy commands for gaps
 
-## Review Norms
-- Changes to `STATE.md`, `LOOP*.md`, and skills require explicit human sign-off before merge.
-- Docs/process changes in `*.md` may be merged after one peer review.
-- Never auto-merge. Use manual merge only.
+# Before/after demo (scores an empty dir → starter → L2)
+bash scripts/before-after-demo.sh
+```
 
-## Safety
-- Do not publish releases or tags without human approval.
-- Do not edit `SECURITY.md` or add secrets to the repo.
+CI runs `validate-patterns` and `audit` on every push/PR (see `.github/workflows/`).
 
-## Release Voice
-User-facing drafts should be concise and non-internal. Use plain language, not implementation jargon. Surface breaking changes prominently.
+## Review norms
+
+- Patterns and starters must stay tool-agnostic in intent; tool-specific paths live under `examples/` and per-tool starters.
+- Never auto-merge changes to `docs/primitives*.md`, `tools/loop-audit/src/`, or showcase assets without human review.
+- Failure stories in `stories/` should include token cost, root cause, and remediation — not just wins.
+- New patterns require an entry in `patterns/registry.yaml`.
+
+## Loop operation (this repo)
+
+- Daily triage: `loop-triage` skill → `STATE.md` (report-only, L1).
+- Fixes: only via PR with human review; `minimal-fix` + `loop-verifier` for assisted changes (L2).
+- Isolation: use git worktrees for any unattended code-change experiments (see `LOOP.md`).
+
+## Test commands
+
+This repo has no application test suite. Quality gates:
+
+```bash
+cd tools/loop-audit && npm run build && node dist/cli.js ../../
+bash scripts/before-after-demo.sh
+```
