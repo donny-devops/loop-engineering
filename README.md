@@ -1,5 +1,11 @@
 # Loop Engineering
 
+[![CI](https://github.com/donny-devops/loop-engineering/actions/workflows/ci.yml/badge.svg)](https://github.com/donny-devops/loop-engineering/actions/workflows/ci.yml)
+[![CodeQL](https://github.com/donny-devops/loop-engineering/actions/workflows/codeql.yml/badge.svg)](https://github.com/donny-devops/loop-engineering/actions/workflows/codeql.yml)
+[![Gitleaks](https://github.com/donny-devops/loop-engineering/actions/workflows/gitleaks.yml/badge.svg)](https://github.com/donny-devops/loop-engineering/actions/workflows/gitleaks.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
+
 Minimal engineering loop scaffold for daily triage, verification, and controlled auto-fix — built around a readiness ladder (L0–L3) that gates how much autonomy the loop is allowed before a human has to sign off.
 
 ## Get started
