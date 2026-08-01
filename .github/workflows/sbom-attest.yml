@@ -1,0 +1,49 @@
+name: SBOM Attestation
+
+on:
+  push:
+    branches: [ main ]
+
+permissions:
+  contents: write
+  id-token: write
+  attestations: write
+
+jobs:
+  sbom-attest:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Generate SBOM
+        run: |
+          mkdir sbom
+          echo "{ \"name\": \"demo\", \"version\": \"1.0\" }" > sbom/sbom.json
+
+      - name: Compute digest
+        id: digest
+        run: |
+          DIGEST=$(sha256sum sbom/sbom.json | awk '{print $1}')
+          echo "sha256=$DIGEST" >> $GITHUB_OUTPUT
+
+      - name: Attest SBOM
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { attest } = require('@actions/attest');
+
+            await attest({
+              subjects: [
+                {
+                  name: 'sbom.json',
+                  digest: { sha256: process.env.DIGEST }
+                }
+              ],
+              predicateType: 'https://in-toto.io/attestation/sbom',
+              predicate: { description: 'SBOM for release 1.0' },
+              token: core.getInput('gh-token')
+            });
+          gh-token: ${{ secrets.GITHUB_TOKEN }}
+          env:
+            DIGEST: ${{ steps.digest.outputs.sha256 }}
