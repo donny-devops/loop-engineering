@@ -1,0 +1,72 @@
+name: Build and Attest Artifact
+
+on:
+  push:
+    branches: [ main ]
+
+permissions:
+  contents: write        # required to upload attestations
+  id-token: write        # required for Sigstore signing
+  attestations: write    # required for GH attestations API
+
+jobs:
+  build-and-attest:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build artifact
+        run: |
+          mkdir dist
+          echo "Hello world" > dist/my-artifact.txt
+
+      - name: Compute SHA256 digest
+        id: digest
+        run: |
+          DIGEST=$(sha256sum dist/my-artifact.txt | awk '{print $1}')
+          echo "sha256=$DIGEST" >> $GITHUB_OUTPUT
+
+      - name: Generate release attestation
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { attest } = require('@actions/attest');
+
+            const result = await attest({
+              subjects: [
+                {
+                  name: 'my-artifact.txt',
+                  digest: { sha256: process.env.DIGEST }
+                }
+              ],
+              predicateType: 'https://in-toto.io/attestation/release',
+              predicate: {
+                releaseNotes: 'Initial release of my artifact',
+                builtBy: 'GitHub Actions'
+              },
+              token: core.getInput('gh-token')
+            });
+
+            core.info(`Release attestation created: ${JSON.stringify(result)}`);
+          gh-token: ${{ secrets.GITHUB_TOKEN }}
+          env:
+            DIGEST: ${{ steps.digest.outputs.sha256 }}
+
+      - name: Generate SLSA provenance attestation
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { attestProvenance } = require('@actions/attest');
+
+            const result = await attestProvenance({
+              subjectName: 'my-artifact.txt',
+              subjectDigest: { sha256: process.env.DIGEST },
+              token: core.getInput('gh-token')
+            });
+
+            core.info(`Provenance attestation created: ${JSON.stringify(result)}`);
+          gh-token: ${{ secrets.GITHUB_TOKEN }}
+          env:
+            DIGEST: ${{ steps.digest.outputs.sha256 }}
