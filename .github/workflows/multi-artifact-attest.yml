@@ -1,0 +1,49 @@
+name: Multi-Artifact Attestation
+
+on:
+  push:
+    branches: [ main ]
+
+permissions:
+  contents: write
+  id-token: write
+  attestations: write
+
+jobs:
+  attest-multiple:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build artifacts
+        run: |
+          mkdir dist
+          echo "artifact A" > dist/a.txt
+          echo "artifact B" > dist/b.txt
+
+      - name: Compute digests
+        id: digests
+        run: |
+          echo "a_sha=$(sha256sum dist/a.txt | awk '{print $1}')" >> $GITHUB_OUTPUT
+          echo "b_sha=$(sha256sum dist/b.txt | awk '{print $1}')" >> $GITHUB_OUTPUT
+
+      - name: Attest both artifacts
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { attest } = require('@actions/attest');
+
+            await attest({
+              subjects: [
+                { name: 'a.txt', digest: { sha256: process.env.A_SHA } },
+                { name: 'b.txt', digest: { sha256: process.env.B_SHA } }
+              ],
+              predicateType: 'https://in-toto.io/attestation/release',
+              predicate: { release: 'multi-artifact release' },
+              token: core.getInput('gh-token')
+            });
+          gh-token: ${{ secrets.GITHUB_TOKEN }}
+          env:
+            A_SHA: ${{ steps.digests.outputs.a_sha }}
+            B_SHA: ${{ steps.digests.outputs.b_sha }}
